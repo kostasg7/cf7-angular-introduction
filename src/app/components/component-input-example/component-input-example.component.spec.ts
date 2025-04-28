@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { PersonTableComponent } from '../person-table/person-table.component';
 import { ComponentInputExampleComponent } from './component-input-example.component';
 
 describe('ComponentInputExampleComponent', () => {
@@ -8,7 +8,7 @@ describe('ComponentInputExampleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ComponentInputExampleComponent]
+      imports: [ComponentInputExampleComponent, PersonTableComponent]
     })
     .compileComponents();
 
