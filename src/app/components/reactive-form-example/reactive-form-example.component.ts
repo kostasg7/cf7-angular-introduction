@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { PersonTableComponent } from '../person-table/person-table.component';
 import { SimpleDatatableComponent } from '../simple-datatable/simple-datatable.component';
-import { EpersonReactiveFormComponent } from 'node_modules/@angular/core/weak_ref.d-DWHPG08n';
+import { EpersonReactiveFormComponent } from '../eperson-reactive-form/eperson-reactive-form.component';
 
 @Component({
   selector: 'app-reactive-form-example',
