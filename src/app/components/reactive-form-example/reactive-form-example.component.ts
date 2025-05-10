@@ -5,7 +5,11 @@ import { EpersonReactiveFormComponent } from '../eperson-reactive-form/eperson-r
 
 @Component({
   selector: 'app-reactive-form-example',
-  imports: [],
+  imports: [
+    PersonTableComponent,
+    SimpleDatatableComponent,
+    EpersonReactiveFormComponent
+  ],
   templateUrl: './reactive-form-example.component.html',
   styleUrl: './reactive-form-example.component.css'
 })
