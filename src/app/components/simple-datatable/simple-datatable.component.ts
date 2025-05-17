@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, effect, inject } from '@angular/core';
 import { EPerson } from 'src/app/shared/interfaces/eperson';
 import { reverse, sortBy } from 'lodash-es';
+import { PersonService } from 'src/app/shared/services/person.service';
 
 @Component({
   selector: 'app-simple-datatable',
@@ -10,7 +11,25 @@ import { reverse, sortBy } from 'lodash-es';
 })
 export class SimpleDatatableComponent {
   @Input() data: EPerson[] | undefined;
-  @Output() personClicked = new EventEmitter<EPerson>()
+  @Output() personClicked = new EventEmitter<EPerson>();
+
+  personService = inject(PersonService);
+
+  epersonsData: EPerson[] | undefined = [];
+
+  constructor() {
+    effect(() => {
+      if(this.personService.modifiedDataTable()) {
+        console.log("SIGNAL", this.data)
+        this.epersonsData = this.data
+      }
+      this.personService.modifiedDataTable.set(false);
+    })
+  }
+
+  ngOnInit() {
+    this.epersonsData = this.data
+  }
 
   sortOrder = {
     givenName: 'none',
@@ -20,14 +39,21 @@ export class SimpleDatatableComponent {
     education:'none'
   }
 
+  // ngOnChanges() {
+  //   this.epersonsData = this.data
+  // }
+
   sortData(sortKey: keyof EPerson): void {
-    console.log(sortKey);
+    // console.log(sortKey);
+    this.epersonsData = this.data;
+    console.log('>>>',this.data)
+
     if (this.sortOrder[sortKey]==='asc') {
       this.sortOrder[sortKey] = 'desc'
-      this.data = sortBy(this.data, sortKey).reverse();
+      this.epersonsData = sortBy(this.data, sortKey).reverse();
     } else {
       this.sortOrder[sortKey] = 'asc';
-      this.data = sortBy(this.data, sortKey);
+      this.epersonsData = sortBy(this.data, sortKey);
     }
     
 
@@ -36,7 +62,7 @@ export class SimpleDatatableComponent {
         this.sortOrder[key as keyof EPerson] = 'none'
       }
     }
-    console.log(this.sortOrder);
+    console.log("Simple DataTable", this.data);
   }
 
   sortSign(sortKey: keyof EPerson): string {
